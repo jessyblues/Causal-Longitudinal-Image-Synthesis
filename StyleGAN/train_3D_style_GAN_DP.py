@@ -522,7 +522,7 @@ def main():
     parser.add_argument('--save_every', type=int, default=200)
     parser.add_argument('--print_every', type=int, default=50)
     parser.add_argument('--version', type=str)
-    parser.add_argument('--root_dir', type=str, help='exp dir', default='/home1/yujiali/cf_mri_2/StyleGAN')
+    parser.add_argument('--root_dir', type=str, help='exp dir', default='./dataset')
     
     ## DP setting
     parser.add_argument('--gpu_id', type=str, default='1')
