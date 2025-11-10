@@ -9,12 +9,10 @@ from torch.utils import data
 import SimpleITK as sitk
 import pandas as pd
 import torch.nn.functional as F
-from e4e.utils.data_utils import make_dataset
-from GAN_mri_package.transforms import Compose, RandomFlip_LR, RandomFlip_UD
+
+from models.GAN_mri_package.transforms import Compose, RandomFlip_LR, RandomFlip_UD
 from monai.transforms import CenterSpatialCrop, SpatialPad, Resize
-
-
-
+from glob import glob
 
 
 class MriFileFolderDataset(data.Dataset):
@@ -33,7 +31,7 @@ class MriFileFolderDataset(data.Dataset):
         if type(root) == str:
             root = [root]
         for root_ in root:
-            self.paths += sorted(make_dataset(root_,  data_type='mri_3d', walk=walk))
+            self.paths += glob(os.path.join(root_, '**', '*.nii.gz'), recursive=walk)
         #pdb.set_trace()
 
         self.return_pth = return_pth

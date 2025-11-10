@@ -11,11 +11,9 @@ from torch import nn, optim
 from torch.nn import functional as F
 from torch.autograd import Variable, grad
 
-import sys
-sys.path.append('../../models')
-from GAN_mri_package.model_3D import StyledGenerator, Discriminator, MinibatchDiscrimination
+from models.GAN_mri_package.model_3D import StyledGenerator, Discriminator, MinibatchDiscrimination
 import os
-from GAN_mri_package.dataset import MriFileFolderDataset
+from models.GAN_mri_package.dataset import MriFileFolderDataset
 from torch.backends import cudnn
 import torch.distributed as dist
 import pdb
@@ -23,8 +21,9 @@ import matplotlib.pyplot as plt
 import copy
 import SimpleITK as sitk
 
+
 def cnn_paras_count(net):
-    """cnn参数量统计, 使用方式cnn_paras_count(net)"""
+    """cnn_paras_count(net)"""
     # Find total parameters and trainable parameters
     total_params = sum(p.numel() for p in net.parameters())
     print(f'{total_params:,} total parameters.')
