@@ -40,7 +40,7 @@ def compute_loss(img1, img2, loss_type, device):
     return loss
 
 
-def get_bl_file(img_dir='/home1/yujiali/dataset/brain_MRI/ADNI/T1/aligned_brain_MNI'):
+def get_bl_file(img_dir):
     
     bl_file_name = []
     bl_file_paths = []
@@ -57,7 +57,7 @@ def get_bl_file(img_dir='/home1/yujiali/dataset/brain_MRI/ADNI/T1/aligned_brain_
     
     return bl_file_name, bl_file_paths
 
-def get_bl_date(img_dir='/home1/yujiali/dataset/brain_MRI/ADNI/T1/aligned_brain_MNI'):
+def get_bl_date(img_dir):
     
     bl_subject_date = {}
     
@@ -72,7 +72,7 @@ def get_bl_date(img_dir='/home1/yujiali/dataset/brain_MRI/ADNI/T1/aligned_brain_
     
     return bl_subject_date
 
-def get_bl_mean_from_csv(csv_pth='/home1/yujiali/dataset/brain_MRI/ADNI/T1/excel/bll_mean.csv'):
+def get_bl_mean_from_csv(csv_pth):
 
     subejct_bl_mean = {}
     with open(csv_pth, "r", encoding="utf-8") as f:
@@ -332,7 +332,7 @@ def optimise_in_image_domain(original_image, generator, max_epochs, loss_type, t
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Generate styleGAN mri image')
+    parser = argparse.ArgumentParser(description='Train encoder for styleGAN model')
     
     parser.add_argument('--gan_pth', default='/home1/yujiali/cf_mri_2/StyleGAN/exp_1/checkpoint/237600.model')
     parser.add_argument('--encoder_pth', default='/home1/yujiali/cf_mri_2/Encoder_GAN/e4e_exp3/checkpoints/iteration_28000.pt', type=str)

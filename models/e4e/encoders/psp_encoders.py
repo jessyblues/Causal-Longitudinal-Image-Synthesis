@@ -43,9 +43,7 @@ class ProgressiveStage_3D(Enum):
     Delta9Training = 9
     Delta10Training = 10
     Delta11Training = 11
-    Delta12Training = 12
-    Delta13Training = 13
-    Inference = 14
+    Inference = 12
 
 class GradualStyleBlock(Module):
     def __init__(self, in_c, out_c, spatial):
@@ -147,7 +145,7 @@ class GradualStyleEncoder(Module):
 
         self.styles = nn.ModuleList()
         log_size = int(math.log(opts.stylegan_size, 2))
-        self.style_count = 2 * log_size - 2
+        self.style_count = 2 * log_size - 4
         self.coarse_ind = 3
         self.middle_ind = 7
         for i in range(self.style_count):

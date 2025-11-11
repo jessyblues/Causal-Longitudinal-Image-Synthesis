@@ -56,6 +56,8 @@ python -m StyleGAN.train_3D_style_GAN_DP -root_dir="./dataset"
 ```
 
 ## Training W encoder
-
+```bash
+python -m StyleGAN.train_encoder_for_GAN --img_dir="./dataset"
+```
 
 
