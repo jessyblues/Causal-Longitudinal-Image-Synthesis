@@ -170,8 +170,7 @@ def main_work(args):
     adjust_lr(d_optimizer, args.lr.get(resolution, 0.001))
 
     ## dataset setting
-    dataset_root = ['/home1/yujiali/dataset/brain_MRI/ADNI/T1/aligned_brain_MNI']
-    dataset = MriFileFolderDataset(root=dataset_root, crop=True, crop_size=(192, 224, 192), walk=True)
+    dataset = MriFileFolderDataset(root=os.listdir(args.root_dir), crop=True, crop_size=tuple(args.crop_size), walk=True)
     print('sample number: {}'.format(len(dataset)))
     loader = sample_data(
                 dataset, args.batch.get(resolution, args.batch_default), resolution, use_DDP=False, num_workers=args.num_workers.get(resolution, 4)
@@ -523,6 +522,7 @@ def main():
     parser.add_argument('--print_every', type=int, default=50)
     parser.add_argument('--version', type=str)
     parser.add_argument('--root_dir', type=str, help='exp dir', default='./dataset')
+    parser.add_argument('--crop_size', nargs=3, type=int, default=[192, 224, 192])
     
     ## DP setting
     parser.add_argument('--gpu_id', type=str, default='1')

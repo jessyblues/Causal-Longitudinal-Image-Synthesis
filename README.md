@@ -46,16 +46,8 @@ dataset/
   - Skull-stripped
   - Aligned to MNI space
   - Resampled to a uniform resolution
-  - Consistently named (e.g., `t1.nii.gz`)
 
 ---
-
-## 🧠 Training StyleGAN
-
-```bash
-cd ./Causal-Longitudinal-Image-Synthesis
-python -m StyleGAN.train_3D_style_GAN_DP -root_dir="./dataset"
-```
 
 ## Training StyleGAN
 ```bash
@@ -63,7 +55,7 @@ cd ./Causal-Longitudinal-Image-Synthesis
 python -m StyleGAN.train_3D_style_GAN_DP -root_dir="./dataset"
 ```
 
-
+## Training W encoder
 
 
 
