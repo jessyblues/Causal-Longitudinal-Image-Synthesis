@@ -11,10 +11,8 @@ import pprint
 import torch
 from argparse import Namespace
 
-sys.path.append('/home1/yujiali/cf_mri_2/Encoder_GAN/encoder4editing')
-#sys.path.append("..")
 
-from options.train_options import TrainOptions
+from ImageEncoder.options.train_options import TrainOptions
 from training.coach import Coach
 
 def main():

@@ -3,15 +3,15 @@ import torch
 import torch.nn.functional as F
 from torch.nn import ReLU, Sigmoid, Sequential, Module
 from torch.nn import Conv3d, BatchNorm3d, MaxPool3d, ConvTranspose3d, Upsample
-from GAN_mri_package.dataset import MriFileFolderDataset
+from models.GAN_mri_package.dataset import MriFileFolderDataset
 import pdb
 import torch.nn as nn
-from GAN_mri_package.model_3D import StyledGenerator
+from models.GAN_mri_package.model_3D import StyledGenerator
 import sys
-sys.path.append('/home1/yujiali/cf_mri_2/Encoder_GAN/encoder4editing')
-from models.psp import pSp
 
-from models.encoders.my_modules import noise_encoder
+from ImageEnocder.models.psp import pSp
+
+from ImageEnocder.models.encoders.my_modules import noise_encoder
 import numpy as np
 
 

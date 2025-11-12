@@ -6,9 +6,6 @@ import sys
 import os
 import dlib
 
-sys.path.append(".")
-sys.path.append("..")
-
 from configs import data_configs, paths_config
 from datasets.inference_dataset import InferenceDataset
 from torch.utils.data import DataLoader
