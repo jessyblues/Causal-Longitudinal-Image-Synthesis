@@ -129,6 +129,7 @@ def get_longitidinal_data():
     return new_df
 
 if __name__ == '__main__':
+    
     new_df = get_longitidinal_data()
     new_df.to_csv('./dataset/processed_data.csv', index=False)
     mean_and_std = get_mean_and_std()

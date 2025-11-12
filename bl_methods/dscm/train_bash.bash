@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=5,6,7 python /home/yujiali/cf_mri_2/mia_added_comaparison_methods/dscm/train_vae.py --resume

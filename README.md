@@ -70,7 +70,9 @@ python -m ImageEncoder.scripts.inference_encoder_for_GAN \
 ```
 
 ## ISM establishment
-
+```bash
+python -m causal_discovery_and_SCM_fitting.ISM.encoder_delta_w --gan_pth=/your/path/of/trained/gan
+```
 
 ## Data Preprocessing for Causal Discovery and SCM Fitting
 
