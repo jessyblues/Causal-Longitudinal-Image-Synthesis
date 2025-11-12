@@ -334,8 +334,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Train encoder for styleGAN model')
     
-    parser.add_argument('--gan_pth', default='/home1/yujiali/cf_mri_2/StyleGAN/exp_1/checkpoint/237600.model')
-    parser.add_argument('--encoder_pth', default='/home1/yujiali/cf_mri_2/Encoder_GAN/e4e_exp3/checkpoints/iteration_28000.pt', type=str)
+    parser.add_argument('--gan_pth', default=None, description='pretrained gan model', type=str)
+    parser.add_argument('--encoder_pth', default=None, type=str, description='pretrained encoder model')
     parser.add_argument('--encoder', action='store_true', default=False)
 
     parser.add_argument('--code_dim', default=128)
@@ -343,13 +343,11 @@ if __name__ == '__main__':
     parser.add_argument('--not_search_noise', action='store_true', default=False)
     parser.add_argument('--not_w_star', action='store_true', default=False)
     
-    parser.add_argument('--img_dir_fake_test', default='/home1/yujiali/GAN_mri/fake_dataset/image_test/processed')
     parser.add_argument('--cuda_id', default=7, type=int)
 
-    parser.add_argument('--img_dir', default='/home1/yujiali/dataset/brain_MRI/ADNI/T1/aligned_brain_MNI')
-    parser.add_argument('--previous_dir', default='/home1/yujiali/cf_mri_2/Encoder_GAN/search_exp/exp3/ADNI')
-    parser.add_argument('--exp_dir', default='/home1/yujiali/cf_mri_2/Encoder_GAN/search_exp/exp5/ADNI')
-    parser.add_argument('--bl_csv', default='/home1/yujiali/dataset/brain_MRI/ADNI/T1/excel/bl_mean.csv')
+    parser.add_argument('--img_dir', default=None, type=str, description='image directory for encoding')
+    parser.add_argument('--exp_dir', default='./ImageEncoder/exp', type=str, description='experiment directory')
+    parser.add_argument('--bl_csv', default='./ImageEncoder/ADNI/T1/excel/bl_mean.csv', type=str, description='path to bl csv file for image normalization')
 
 
     parser.add_argument('--optim_method', default='Adam')

@@ -10,7 +10,7 @@ class TrainOptions:
 
     def initialize(self):
         self.parser.add_argument('--exp_dir', type=str, help='Path to experiment output directory', 
-                                 default='/home1/yujiali/cf_mri_2/Encoder_GAN/e4e_exp3')
+                                 default='./ImageEncoder/exp')
         self.parser.add_argument('--dataset_type', default='mri_encode', type=str,
                                  help='Type of dataset/experiment to run')
         self.parser.add_argument('--encoder_type', default='E4E_3d', type=str, help='Which encoder to use')

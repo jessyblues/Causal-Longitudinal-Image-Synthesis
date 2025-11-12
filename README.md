@@ -52,7 +52,7 @@ dataset/
 ## Training StyleGAN
 ```bash
 cd ./Causal-Longitudinal-Image-Synthesis
-python -m StyleGAN.train_3D_style_GAN_DP -root_dir="./dataset"
+python -m StyleGAN.train_3D_style_GAN_DP --root_dir="./dataset"
 ```
 
 ## Training W encoder
@@ -62,6 +62,12 @@ python -m ImageEncoder.training.train_noise_encoder
 ```
 
 ## Infer w and noise
+```bash
+python -m ImageEncoder.scripts.inference_encoder_for_GAN \
+  --gan_pth=/your/path/of/trained/gan \
+  --encoder_pth=/your/path/of/trained/encoder \
+  --img_dir=/your/path/of/images
+```
 
 ## ISM establishment
 
