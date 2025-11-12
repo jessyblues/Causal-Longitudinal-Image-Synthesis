@@ -10,11 +10,11 @@ import networkx as nx
 def get_data_for_causal_discovery(csv_path):
     
     df_csv = csv_path
-    df = pd.read_csv(df_csv)
+    df_pair = pd.read_csv(df_csv)
 
     from sklearn.model_selection import train_test_split
 
-    Subjects = df["Subject"].unique()
+    Subjects = df_pair["Subject"].unique()
 
     train_subj, test_subj = train_test_split(Subjects, test_size=0.3, random_state=42)
 
@@ -61,7 +61,7 @@ def train_mlp(df_train, causal_graph, full_graph, causal=True, epochs=1000, lr=0
     
     df_train, df_val = train_test_split(df_train, test_size=0.2, random_state=42)
     
-    for node in ['GreyMatter', 'WholeBrain', 'SegVentricles']:
+    for node in ['GreyMatter', 'WholeBrain', 'SegVentricles', 'PTAU','ABETA42','TAU']:
         t_1 = f"{node}_t1"
         if causal:
             parents = causal_graph[t_1]

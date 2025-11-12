@@ -48,20 +48,21 @@ dataset/
   - Resampled to a uniform resolution
 
 ---
+## Training
 
-## Training StyleGAN
+### Training StyleGAN
 ```bash
 cd ./Causal-Longitudinal-Image-Synthesis
 python -m StyleGAN.train_3D_style_GAN_DP --root_dir="./dataset"
 ```
 
-## Training W encoder
+### Training W encoder
 ```bash
 python -m ImageEncoder.scripts.train
 python -m ImageEncoder.training.train_noise_encoder
 ```
 
-## Infer w and noise
+### Infer w and noise
 ```bash
 python -m ImageEncoder.scripts.inference_encoder_for_GAN \
   --gan_pth=/your/path/of/trained/gan \
@@ -69,12 +70,12 @@ python -m ImageEncoder.scripts.inference_encoder_for_GAN \
   --img_dir=/your/path/of/images
 ```
 
-## ISM establishment
+### ISM establishment
 ```bash
 python -m causal_discovery_and_SCM_fitting.ISM.encoder_delta_w --gan_pth=/your/path/of/trained/gan
 ```
 
-## Data Preprocessing for Causal Discovery and SCM Fitting
+### Data Preprocessing for Causal Discovery and SCM Fitting
 
 This script prepares the longitudinal dataset used for causal discovery and causal structural model (SCM) fitting.  
 It performs the following steps:
@@ -88,7 +89,7 @@ It performs the following steps:
 
 ---
 
-### Input CSV format
+#### Input CSV format
 
 The raw data file should include the following columns:
 
@@ -99,7 +100,7 @@ The script will automatically group by Subject and construct paired longitudinal
 
 ---
 
-### Normalization Rules
+#### Normalization Rules
 
 All variables except for Sex, APOE4, and PTEDUCAT are normalized using the mean and standard deviation computed from the raw data.
 
@@ -113,7 +114,7 @@ The normalization statistics are saved to mean_and_std.csv.
 
 ---
 
-### Output CSV format
+#### Output CSV format
 
 The processed longitudinal dataset has the following column structure:
 
@@ -123,10 +124,66 @@ GreyMatter_T0, GreyMatter_T1, PTEDUCAT, Sex, APOE4, Age_T0, Age_T1, Subject
 
 ---
 
-## Run the Causal Discovery and SCM Fitting script
+### Run the Causal Discovery and SCM Fitting script
 ```bash
 python -m causal_discovery_and_SCM_fitting.process_data
-python -m causal_discovery.causal_discovery --data_csv="./dataset/processed_data.csv" --output_dir="./causal_discovery"
-python -m causal_discovery.causal_mlp --causal_graph_path="./causal_discovery/final_ensemble_graph.osm" --data_csv="./dataset/processed_data.csv" --output_dir="./causal_discovery"
+python -m causal_discovery_and_SCM_fitting.causal_discovery --data_csv="./dataset/processed_data.csv" --output_dir="./causal_discovery_and_SCM_fitting"
+python -m causal_discovery_and_SCM_fitting.causal_mlp \
+  --causal_graph_path="./causal_discovery_and_SCM_fitting/final_ensemble_graph.osm" \
+  --data_csv="./dataset/processed_data.csv" \
+  --output_dir="./causal_discovery_and_SCM_fitting"
+```
+
+
+## Inference
+
+
+### Input Description
+
+The input CSV should contain variables at two timepoints (e.g., baseline `t0` and target `t1`).  
+Each row corresponds to one subject's data, and the model will **append new prediction columns** for the target timepoint.
+
+Example:
+
+| Subject | GreyMatter_t0 | WholeBrain_t0 | SegVentricles_t0 | GreyMatter_t1 | WholeBrain_t1 | SegVentricles_t1 |
+|----------|----------------|----------------|------------------|----------------|----------------|------------------|
+| S001 | 583421 | 1482300 | 36852 | 580210 | 1478400 | 37200 |
+| S002 | 574230 | 1469200 | 37900 | 571120 | 1465200 | 38110 |
+
+After inference, the output CSV will include predicted columns such as:
+
+| ... | GreyMatter_t1_pred | WholeBrain_t1_pred | SegVentricles_t1_pred |
+
+---
+
+
+### Predict Tabular Variables
+
+```bash
+python inference.py \
+  --input_csv ./data/test_longitudinal.csv \
+  --causal_graph_path ./causal_discovery/final_ensemble_graph.osm \
+  --model_dir ./causal_discovery_and_SCM_fitting \
+  --output_csv ./results/predictions.csv
+```
+
+---
+
+### Inference Image
+
+Run the trained regression model to generate predicted MRI reconstructions.
+
+```bash
+python inference.py \
+  --csv_pth ./dataset/causal_longitudinal_data_only_volume.csv \
+  --w_folder ./ImageEncoder/exp \
+  --gan_pth ./StyleGAN/exp_1/checkpoint/172000.model \
+  --model_pth ./causal_discovery_and_SCM_fitting/ISM/exp/best.model \
+  --output_folder ./inference_results
+```
+
+Each subject’s reconstructed MRI is saved as:
+```
+./inference_results/{subject_id}/{date}/reconstructed.nii.gz
 ```
 
