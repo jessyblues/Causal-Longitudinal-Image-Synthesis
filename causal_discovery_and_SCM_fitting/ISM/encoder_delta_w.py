@@ -332,14 +332,9 @@ def regession_volume_on_w(args, data, gan_pth):
     
     attitude = best_model.attitude_fcs(bl_input)
     direction = best_model.direction_model.weight.detach()
-    #direction = best_model.fcs[0].weight.detach()
     direction = direction/torch.norm(direction)
-    #predict_delta_w = target_delta_volume * direction
     predict_delta_w = target_delta_volume * direction / attitude
-    
-    
-    #predict_w = (predict_delta_w + torch.tensor(np.array(bl_ws), dtype=torch.float, device=device))
-    #predict_w = predict_delta_w
+
     predict_w = predict_delta_w + bl_input
     
     
@@ -371,20 +366,13 @@ def regession_volume_on_w(args, data, gan_pth):
         dst_folder = os.path.join(save_folder, subject, date)
         os.makedirs(dst_folder, exist_ok=True)
         
-        #pdb.set_trace()
         with torch.no_grad():
             image = generator(input=recon_w_idx, noise=bl_noise, step=5, input_is_latent=True).detach()
             
         image = image.squeeze().cpu()
         image = (image - torch.min(image)) / (torch.max(image) - torch.min(image))
-        #image = (torch.clip(image, min=0))/torch.max(image)
-        #image = (image_torch)/torch.max(image)
 
 
-        th = 35/256
-        mask = image > th 
-            
-        masked_img = image * mask
         image_sitk = sitk.GetImageFromArray(image.numpy())
 
         sitk.WriteImage(image_sitk, os.path.join(dst_folder, 'rec.nii.gz'))

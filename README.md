@@ -75,7 +75,8 @@ python -m ImageEncoder.scripts.inference_encoder_for_GAN \
 python -m causal_discovery_and_SCM_fitting.ISM.encoder_delta_w --gan_pth=/your/path/of/trained/gan
 ```
 
-### Data Preprocessing for Causal Discovery and SCM Fitting
+### Causal Discovery and SCM Fitting
+#### Data Preprocessing
 
 This script prepares the longitudinal dataset used for causal discovery and causal structural model (SCM) fitting.  
 It performs the following steps:
